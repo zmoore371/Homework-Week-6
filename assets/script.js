@@ -12,11 +12,9 @@ searchEl.on("click", function(event) {
     var city = cityEl.val()
     
     if(city) {
-        getApiToday(city)
+        getApiToday(city);
         cityEl.val('');
-        $(".weather-info").show();
-        $(".forecast").show();
-
+        
     } else {
         alert("yo you gotta put some text in this mug")
     }
@@ -25,16 +23,22 @@ searchEl.on("click", function(event) {
 })
 
 function getApiToday (city) {
-    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=" + APIkey
-    console.log(requestUrl)
-    
-    fetch(requestUrl)
-        .then(function (response){
-            return response.json();
-        })
-    //Put an if 404 alert thing somewhere in here probably
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&units=imperial&appid=" + APIkey
 
-}
+    fetch(requestUrl) 
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                  displayCurrent(data);
+                  $(".weather-info").show();
+                  $(".forecast").show();
+                });
+            } else {
+                alert("Error! City not found!")
+            }
+        })
+};
+
 
 function getApiForecast (city) {
     var requestUrl = "whatever the 5 day forecast api call is" + city + "likely some more crap" + APIkey
@@ -42,19 +46,18 @@ function getApiForecast (city) {
     // fetch(requestUrl) then blah blah blah
 }
 
-function displayCurrent() {
+function displayCurrent(today) {
     var currentCity = $(".current-city");
     var currentTemp = $(".current-temp");
     var currentWind = $(".current-wind");
     var currentHumidity = $(".current-humidity");
-    console.log("hey")
-    
-    currentCity.text("Raleigh")
-    currentTemp.text("Current Temp: " + 70)
-    currentWind.text("Current Wind Speed: " + 15)
-    currentHumidity.text("Current Humidity: " + 60 + "%")
+    var currentUv =$(".uv-index");
 
-
+    currentCity.text(today.name)
+    currentTemp.text("Current Temp: " + today.main.temp) // may want to round this?
+    currentWind.text("Current Wind Speed: " + today.wind.speed)
+    currentHumidity.text("Current Humidity: " + today.main.humidity + "%")
+    currentUv.text()
 }
 
 function init() {
@@ -63,6 +66,5 @@ function init() {
 }
 
 
-// init();
+init();
 
-displayCurrent();
