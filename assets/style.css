@@ -24,7 +24,6 @@ header h1{
     flex-grow: 1;
     padding-left: 40px;
     align-content: stretch;
-    border: 1px solid black;
 }
 
 .city-name{
@@ -53,11 +52,9 @@ header h1{
     display: flex; 
     flex-direction: column;
     margin: 10px;
-    border: 1px solid gold;
-    
 }
 
-.day1, .day2, .day3, .day4, .day5{
+.day{
     height: 250px;
     flex-wrap: wrap;
     flex-grow: 2;
@@ -66,4 +63,40 @@ header h1{
     margin: 10px;
     background: rgb(2,0,36);
     background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(9,121,107,1) 35%, rgba(0,212,255,1) 100%);
+}
+
+@media screen and (max-width:480px) {
+    body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .city-name{
+        width: 100%;
+    }
+
+    .searchBtn{
+        width: 100%;
+    }
+    
+    .city-info{
+        display: inline-block;
+        align-items: center;
+        width: 90%;
+    }
+    
+    .sidebar{
+        padding-left: 0;
+        align-items: center;
+    }
+    
+    .forecast{
+        flex-direction: column;
+        /* width: 400px; */
+    }
+    
+    .day{
+        margin-top: 15px;
+    }
 }

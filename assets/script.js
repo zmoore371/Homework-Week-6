@@ -9,18 +9,17 @@ searchEl.on("click", function(event) {
     event.preventDefault();
     console.log(cityEl.val());
     
-    var city = cityEl.val()
+    var city = cityEl.val();
     
     if(city) {
         getApiToday(city);
+        getApiForecast(city);
         cityEl.val('');
         
     } else {
         alert("yo you gotta put some text in this mug")
     }
-
-    
-})
+});
 
 function getApiToday (city) {
     var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&units=imperial&appid=" + APIkey
@@ -34,16 +33,25 @@ function getApiToday (city) {
                   $(".forecast").show();
                 });
             } else {
-                alert("Error! City not found!")
+                alert("Error! City not found!");
             }
         })
 };
 
 
 function getApiForecast (city) {
-    var requestUrl = "whatever the 5 day forecast api call is" + city + "likely some more crap" + APIkey
+    var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey
 
-    // fetch(requestUrl) then blah blah blah
+    fetch(requestUrl)
+        .then (function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    displayForecast(data);
+                });
+            } else {
+                alert("Error! City not found!");
+            }
+        })
 }
 
 function displayCurrent(today) {
@@ -53,18 +61,23 @@ function displayCurrent(today) {
     var currentHumidity = $(".current-humidity");
     var currentUv =$(".uv-index");
 
-    currentCity.text(today.name)
-    currentTemp.text("Current Temp: " + today.main.temp) // may want to round this?
-    currentWind.text("Current Wind Speed: " + today.wind.speed)
-    currentHumidity.text("Current Humidity: " + today.main.humidity + "%")
-    currentUv.text()
+    currentCity.text(today.name + " " + moment().format("(ddd, MMMM Do)"));
+    currentTemp.text("Current Temp: " + (Math.round(today.main.temp)) + "°F");
+    currentWind.text("Current Wind Speed: " + today.wind.speed + "MPH");
+    currentHumidity.text("Current Humidity: " + today.main.humidity + "%");
+    currentUv.text();
 }
+
+function displayForecast(forecast) {
+    console.log(forecast)
+}
+
+
 
 function init() {
     $(".weather-info").hide()
     $(".forecast").hide()
 }
 
-
-init();
+// init();
 
