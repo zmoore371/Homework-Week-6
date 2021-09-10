@@ -18,6 +18,10 @@ header h1{
     margin-top: 25px;
 }
 
+.forecast-header{
+    padding-left: 10px;
+}
+
 .sidebar{
     display: flex;
     flex-direction: column;

@@ -46,7 +46,7 @@ function getApiForecast (city) {
                     displayForecast(data);
                 });
             } else {
-                alert("Error! City not found!");
+                return;
             }
         })
 }
@@ -69,20 +69,35 @@ function displayForecast(forecast) {
     x = 1
     nextDay = moment().add(x, "days").format("YYYY-MM-DD")
     limitedForecast =  []
-    
-    
+    forecastDay = $(".forecast-date") 
+    forecastTemp = $(".forecast-temp")
+    forecastWind = $(".forecast-wind")
+    forecastHumidity = $(".forecast-humidity")
+
+
     for (i=0; i<forecast.list.length; i++) {
-        
         if (forecast.list[i].dt_txt === nextDay + " 12:00:00") {
-            // console.log(forecast.list[i].dt_txt)
             x = x + 1
             limitedForecast.push(forecast.list[i]);
             nextDay =  moment().add((x), "days").format("YYYY-MM-DD")
-            
         }
     }
     console.log(nextDay)
     console.log(limitedForecast)
+
+    for (i=0; i<limitedForecast.length; i++) {
+        if (limitedForecast === null) {
+            return;
+        } else {
+            forecastDay[i].innerHTML = limitedForecast[i].dt_txt.substring(5, 10)
+            forecastTemp[i].innerHTML = limitedForecast[i].main.temp
+            forecastWind[i].innerHTML = "Wind: " + limitedForecast[i].wind.speed + " MPH"
+            forecastHumidity[i].innerHTML = "Humidity: " + limitedForecast[i].main.humidity + "%"
+            console.log(limitedForecast[i].wind.speed)
+        }
+        
+    }
+
 
 }
 
