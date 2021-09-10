@@ -2,9 +2,6 @@ var APIkey = "87fda1a82cfddd0be50e7d0dba921aff";
 var searchEl = $(".searchBtn");
 var cityEl = $(".city-name");
 
-
-
-
 searchEl.on("click", function(event) {
     event.preventDefault();
     console.log(cityEl.val());
@@ -40,7 +37,7 @@ function getApiToday (city) {
 
 
 function getApiForecast (city) {
-    var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + APIkey
+    var requestUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial=5&appid=" + APIkey
 
     fetch(requestUrl)
         .then (function (response) {
@@ -69,10 +66,25 @@ function displayCurrent(today) {
 }
 
 function displayForecast(forecast) {
-    console.log(forecast)
+    x = 1
+    nextDay = moment().add(x, "days").format("YYYY-MM-DD")
+    limitedForecast =  []
+    
+    
+    for (i=0; i<forecast.list.length; i++) {
+        
+        if (forecast.list[i].dt_txt === nextDay + " 12:00:00") {
+            // console.log(forecast.list[i].dt_txt)
+            x = x + 1
+            limitedForecast.push(forecast.list[i]);
+            nextDay =  moment().add((x), "days").format("YYYY-MM-DD")
+            
+        }
+    }
+    console.log(nextDay)
+    console.log(limitedForecast)
+
 }
-
-
 
 function init() {
     $(".weather-info").hide()
