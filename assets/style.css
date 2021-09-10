@@ -12,6 +12,15 @@ header h1{
     padding-top: 10px;
 }
 
+.city-and-img{
+    display: flex;
+    flex-direction: row;
+}
+
+.current-img{
+    height: 50px;
+}
+
 .city-info{
     display: flex;
     flex-direction: row;
