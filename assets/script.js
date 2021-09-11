@@ -96,17 +96,14 @@ function displayUv(todayUv) {
         currentUv.removeClass("moderate")
         currentUv.removeClass("high")
         currentUv.addClass("favorable")
-        
     } else if (uvIndex < 5) {
         currentUv.removeClass("favorable")
         currentUv.removeClass("high")
         currentUv.addClass("moderate")
-        
     } else {
         currentUv.removeClass("moderate")
         currentUv.removeClass("favorable")
         currentUv.addClass("high")
-        
     }
 
 }
