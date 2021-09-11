@@ -62,11 +62,6 @@ function displayCurrent(today) {
     currentWind.text("Current Wind Speed: " + today.wind.speed + "MPH");
     currentHumidity.text("Current Humidity: " + today.main.humidity + "%");
     currentImg[0].src = "http://openweathermap.org/img/wn/" + today.weather[0].icon + "@2x.png"
-    console.log(today)
-
-    
-    currentUv.text();
-    
 }
 
 function getUv(today) {
@@ -84,7 +79,6 @@ function getUv(today) {
                 return;
             }
         })
-
 }
 
 function displayUv(todayUv) {
