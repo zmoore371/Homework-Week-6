@@ -5,7 +5,7 @@ var cityEl = $(".city-name");
 searchEl.on("click", function (event) {
     event.preventDefault();
     var city = cityEl.val();
-
+    
     if (city) {
         getApiToday(city);
         getApiForecast(city);
@@ -24,6 +24,7 @@ function getApiToday(city) {
             if (response.ok) {
                 response.json().then(function (data) {
                     displayCurrent(data);
+                    getUv(data);
                     $(".weather-info").show();
                     $(".forecast").show();
                 });
@@ -62,11 +63,54 @@ function displayCurrent(today) {
     currentHumidity.text("Current Humidity: " + today.main.humidity + "%");
     currentImg[0].src = "http://openweathermap.org/img/wn/" + today.weather[0].icon + "@2x.png"
     console.log(today)
-    console.log("http://openweathermap.org/img/wn/" + today.weather[0].icon + "@1x.png")
+
     
     currentUv.text();
     
 }
+
+function getUv(today) {
+    lat = today.coord.lat
+    lon = today.coord.lon
+    requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey
+
+    fetch(requestUrl)
+        .then (function (response) {
+            if(response.ok) {
+                response.json().then(function (data) {
+                    displayUv(data)
+                })
+            } else {
+                return;
+            }
+        })
+
+}
+
+function displayUv(todayUv) {
+    currentUv = $(".uv-index")
+    uvIndex = todayUv.current.uvi
+    currentUv.text(uvIndex + " UV Index")
+
+    if(uvIndex < 2) {
+        currentUv.removeClass("moderate")
+        currentUv.removeClass("high")
+        currentUv.addClass("favorable")
+        
+    } else if (uvIndex < 5) {
+        currentUv.removeClass("favorable")
+        currentUv.removeClass("high")
+        currentUv.addClass("moderate")
+        
+    } else {
+        currentUv.removeClass("moderate")
+        currentUv.removeClass("favorable")
+        currentUv.addClass("high")
+        
+    }
+
+}
+
 
 function displayForecast(forecast) {
     x = 1

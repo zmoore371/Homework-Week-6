@@ -78,6 +78,33 @@ header h1{
     background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(9,121,107,1) 35%, rgba(0,212,255,1) 100%);
 }
 
+
+
+.high{
+    background-color: red;
+    width: 135px;
+    border-radius: 20px;
+    padding-left: 20px;
+}
+
+
+.moderate{
+    background-color: yellow;
+    width: 135px;
+    border-radius: 20px;
+    padding-left: 20px;
+}
+
+
+.favorable{
+    background-color: lightgreen;
+    width: 135px;
+    border-radius: 20px;
+    padding-left: 20px;
+}
+
+
+
 @media screen and (max-width:480px) {
     body{
         display: flex;
