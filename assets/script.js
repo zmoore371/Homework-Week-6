@@ -54,7 +54,6 @@ function displayCurrent(today) {
     var currentTemp = $(".current-temp");
     var currentWind = $(".current-wind");
     var currentHumidity = $(".current-humidity");
-    var currentUv = $(".uv-index");
     var currentImg = $('.current-img')
 
     currentCity.text(today.name + " " + moment().format("(ddd, MMMM Do)"));
@@ -119,6 +118,13 @@ function displayForecast(forecast) {
             limitedForecast.push(forecast.list[i]);
             nextDay = moment().add((x), "days").format("YYYY-MM-DD")
         }
+    }
+    console.log(forecast)
+
+    // before putting this here if you looked at the weather too early it would not show a 5th day due to the 12:00 forecast being avaliable yet. This check makes sure that the array has 5 inputs to push to screen by appending the last avaliable forecast slot to limitedForecast
+    if (limitedForecast.length !== 5) {
+        limitedForecast.push(forecast.list[39])
+        console.log('Yoo')
     }
 
     for (i = 0; i < limitedForecast.length; i++) {

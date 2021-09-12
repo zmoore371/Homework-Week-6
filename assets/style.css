@@ -127,6 +127,10 @@ header h1{
         align-items: center;
     }
 
+    header h1{
+        padding-top: 20px;
+    }
+
     .city-name{
         width: 100%;
     }
