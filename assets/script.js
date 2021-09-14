@@ -1,11 +1,12 @@
 var APIkey = "87fda1a82cfddd0be50e7d0dba921aff";
 var searchEl = $(".searchBtn");
 var cityEl = $(".city-name");
+var previousSearches = []
 
 searchEl.on("click", function (event) {
     event.preventDefault();
     var city = cityEl.val();
-    
+
     if (city) {
         getApiToday(city);
         getApiForecast(city);
@@ -14,6 +15,7 @@ searchEl.on("click", function (event) {
     } else {
         alert("Text area cannot be blank!")
     }
+
 });
 
 function getApiToday(city) {
@@ -27,6 +29,10 @@ function getApiToday(city) {
                     getUv(data);
                     $(".weather-info").show();
                     $(".forecast").show();
+                    localStorage.getItem("history")
+                    searchText = city.charAt(0).toUpperCase() + city.slice(1);
+                    previousSearches.push(searchText);
+                    storePrevious();
                 });
             } else {
                 alert("Error! City not found!");
@@ -69,8 +75,8 @@ function getUv(today) {
     requestUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey
 
     fetch(requestUrl)
-        .then (function (response) {
-            if(response.ok) {
+        .then(function (response) {
+            if (response.ok) {
                 response.json().then(function (data) {
                     displayUv(data)
                 })
@@ -85,7 +91,7 @@ function displayUv(todayUv) {
     uvIndex = todayUv.current.uvi
     currentUv.text(uvIndex + " UV Index")
 
-    if(uvIndex < 2) {
+    if (uvIndex < 2) {
         currentUv.removeClass("moderate")
         currentUv.removeClass("high")
         currentUv.addClass("favorable")
@@ -124,7 +130,7 @@ function displayForecast(forecast) {
     // before putting this here if you looked at the weather too early it would not show a 5th day due to the 12:00 forecast being avaliable yet. This check makes sure that the array has 5 inputs to push to screen by appending the last avaliable forecast slot to limitedForecast
     if (limitedForecast.length !== 5) {
         limitedForecast.push(forecast.list[39])
-        console.log('Yoo')
+        console.log(limitedForecast)
     }
 
     for (i = 0; i < limitedForecast.length; i++) {
@@ -140,10 +146,43 @@ function displayForecast(forecast) {
     }
 }
 
+
+function renderPrevious() {
+    console.log(previousSearches)
+    
+
+    for (var i = 0; i < searches.length; i++) {
+
+        var btn = document.createElement("button");
+        btn.textContent = searches[i]
+        btn.setAttribute("class", "searchBtn")
+
+        searchEl.append(btn)
+
+    }
+
+}
+
+function storePrevious() {
+    localStorage.setItem("history", JSON.stringify(previousSearches))
+
+}
+
+
 function init() {
     $(".weather-info").hide()
     $(".forecast").hide()
     $(".forecast-header").hide()
+    
+    searches = JSON.parse(localStorage.getItem("history"));
+    if (searches === null) {
+        return;
+    } else {
+        previousSearches = searches
+    }
+
+
+    renderPrevious();
 }
 
 init();
