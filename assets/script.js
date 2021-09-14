@@ -1,6 +1,6 @@
 var APIkey = "87fda1a82cfddd0be50e7d0dba921aff";
 var searchEl = $("#search");
-var historySearch = $("#history");
+var historySearch = $(".history");
 var cityEl = $(".city-name");
 var sidebar = $(".sidebar");
 var previousSearches = [];
@@ -19,17 +19,20 @@ searchEl.on("click", function (event) {
     }
 });
 
-historySearch.on("click", function (event) {
-    event.preventDefault();
-    city = "wilmington"
-    if (city) {
-        console.log("Hey")
-        getApiToday(city)
-        getApiForecast(city)
-        cityEl.val('')
-    } else {
-        alert("Hola")
-    }
+historySearch.on("click", function () {
+    
+    alert("ASHHH")
+    
+    // event.preventDefault();
+    // city = "wilmington"
+    // if (city) {
+    //     console.log("Hey")
+    //     getApiToday(city)
+    //     getApiForecast(city)
+    //     cityEl.val('')
+    // } else {
+    //     alert("Hola")
+    // }
 })
 
 function getApiToday(city) {
@@ -164,8 +167,7 @@ function renderPrevious() {
     for (var i = 0; i < searches.length; i++) {
         var btn = document.createElement("button");
         btn.textContent = searches[i]
-        btn.setAttribute("class", "searchBtn")
-        btn.setAttribute("id", "history")
+        btn.setAttribute("class", "searchBtn history")
         btn.setAttribute("value", searches[i])
         sidebar.append(btn)
     }
@@ -181,7 +183,6 @@ function storePrevious(previousSearches, searches) {
         btn.setAttribute("id", "history")
         btn.setAttribute("value", previousSearches)
         sidebar.append(btn)
-
     }
 }
 

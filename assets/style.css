@@ -39,6 +39,12 @@ header h1{
     align-content: stretch;
 }
 
+.form{
+    display:flex;
+    flex-direction: column;
+    
+}
+
 .city-name{
     width: 250px;
     margin-top: 15px;
