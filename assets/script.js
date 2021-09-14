@@ -1,7 +1,9 @@
 var APIkey = "87fda1a82cfddd0be50e7d0dba921aff";
-var searchEl = $(".searchBtn");
+var searchEl = $("#search");
+var historySearch = $("#history");
 var cityEl = $(".city-name");
-var previousSearches = []
+var sidebar = $(".sidebar");
+var previousSearches = [];
 
 searchEl.on("click", function (event) {
     event.preventDefault();
@@ -15,8 +17,20 @@ searchEl.on("click", function (event) {
     } else {
         alert("Text area cannot be blank!")
     }
-
 });
+
+historySearch.on("click", function (event) {
+    event.preventDefault();
+    city = "wilmington"
+    if (city) {
+        console.log("Hey")
+        getApiToday(city)
+        getApiForecast(city)
+        cityEl.val('')
+    } else {
+        alert("Hola")
+    }
+})
 
 function getApiToday(city) {
     var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIkey
@@ -32,7 +46,7 @@ function getApiToday(city) {
                     localStorage.getItem("history")
                     searchText = city.charAt(0).toUpperCase() + city.slice(1);
                     previousSearches.push(searchText);
-                    storePrevious();
+                    storePrevious(previousSearches);
                 });
             } else {
                 alert("Error! City not found!");
@@ -146,28 +160,30 @@ function displayForecast(forecast) {
     }
 }
 
-
 function renderPrevious() {
-    console.log(previousSearches)
-    
-
     for (var i = 0; i < searches.length; i++) {
-
         var btn = document.createElement("button");
         btn.textContent = searches[i]
         btn.setAttribute("class", "searchBtn")
+        btn.setAttribute("id", "history")
+        btn.setAttribute("value", searches[i])
+        sidebar.append(btn)
+    }
+}
 
-        searchEl.append(btn)
+function storePrevious(previousSearches, searches) {
+    localStorage.setItem("history", JSON.stringify(previousSearches))
+    
+    if(previousSearches !== null){
+        var btn = document.createElement("button");
+        btn.textContent = previousSearches.at(-1)
+        btn.setAttribute("class", "searchBtn")
+        btn.setAttribute("id", "history")
+        btn.setAttribute("value", previousSearches)
+        sidebar.append(btn)
 
     }
-
 }
-
-function storePrevious() {
-    localStorage.setItem("history", JSON.stringify(previousSearches))
-
-}
-
 
 function init() {
     $(".weather-info").hide()
@@ -180,7 +196,6 @@ function init() {
     } else {
         previousSearches = searches
     }
-
 
     renderPrevious();
 }
