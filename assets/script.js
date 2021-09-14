@@ -4,7 +4,7 @@ var historySearch = $(".history");
 var cityEl = $(".city-name");
 var sidebar = $(".sidebar");
 var previousSearches = [];
-
+var renderedButtons = $(".city-info")
 searchEl.on("click", function (event) {
     event.preventDefault();
     var city = cityEl.val();
@@ -167,8 +167,8 @@ function renderPrevious() {
     for (var i = 0; i < searches.length; i++) {
         var btn = document.createElement("button");
         btn.textContent = searches[i]
-        btn.setAttribute("class", "searchBtn history")
-        btn.setAttribute("value", searches[i])
+        btn.setAttribute("class", "history")
+        // btn.setAttribute("value", searches[i])
         sidebar.append(btn)
     }
 }
@@ -179,9 +179,8 @@ function storePrevious(previousSearches, searches) {
     if(previousSearches !== null){
         var btn = document.createElement("button");
         btn.textContent = previousSearches.at(-1)
-        btn.setAttribute("class", "searchBtn")
-        btn.setAttribute("id", "history")
-        btn.setAttribute("value", previousSearches)
+        btn.setAttribute("class", "history")
+        // btn.setAttribute("value", previousSearches)
         sidebar.append(btn)
     }
 }

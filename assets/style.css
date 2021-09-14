@@ -42,7 +42,7 @@ header h1{
 .form{
     display:flex;
     flex-direction: column;
-    
+
 }
 
 .city-name{
@@ -50,13 +50,13 @@ header h1{
     margin-top: 15px;
 }
 
-.searchBtn{
+.searchBtn, .history{
     width:250px;
     height: 30px;
     margin-top: 15px;
 }
 
-.searchBtn{
+.searchBtn, .history{
     display:inline-block;
     padding:0.3em 1.2em;
     margin:20px 0.3em 0.3em 0;
@@ -72,7 +72,7 @@ header h1{
     border: none;
 }
 
-.searchBtn:hover{
+.searchBtn:hover, .history:hover{
     background-color:#4095c6;
 }
 
