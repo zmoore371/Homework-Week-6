@@ -5,6 +5,7 @@ var cityEl = $(".city-name");
 var sidebar = $(".sidebar");
 var previousSearches = [];
 var renderedButtons = $(".city-info")
+
 searchEl.on("click", function (event) {
     event.preventDefault();
     var city = cityEl.val();
@@ -19,20 +20,15 @@ searchEl.on("click", function (event) {
     }
 });
 
-historySearch.on("click", function () {
+historySearch.on("click", function (event) {
+    event.preventDefault()
+    console.log(this.innerHTML)
     
-    alert("ASHHH")
-    
-    // event.preventDefault();
-    // city = "wilmington"
-    // if (city) {
-    //     console.log("Hey")
-    //     getApiToday(city)
-    //     getApiForecast(city)
-    //     cityEl.val('')
-    // } else {
-    //     alert("Hola")
-    // }
+    previousCity = this.innerHTML
+    console.log("Hey")
+    getPastApiToday(previousCity)
+    getApiForecast(previousCity)
+    cityEl.val('')
 })
 
 function getApiToday(city) {
@@ -50,6 +46,24 @@ function getApiToday(city) {
                     searchText = city.charAt(0).toUpperCase() + city.slice(1);
                     previousSearches.push(searchText);
                     storePrevious(previousSearches);
+                });
+            } else {
+                alert("Error! City not found!");
+            }
+        })
+};
+
+function getPastApiToday(city) {
+    var requestUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIkey
+
+    fetch(requestUrl)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    displayCurrent(data);
+                    getUv(data);
+                    $(".weather-info").show();
+                    $(".forecast").show();
                 });
             } else {
                 alert("Error! City not found!");
@@ -164,6 +178,7 @@ function displayForecast(forecast) {
 }
 
 function renderPrevious() {
+    
     for (var i = 0; i < searches.length; i++) {
         var btn = document.createElement("button");
         btn.textContent = searches[i]
