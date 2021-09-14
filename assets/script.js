@@ -1,8 +1,7 @@
 var APIkey = "87fda1a82cfddd0be50e7d0dba921aff";
 var searchEl = $("#search");
-var historySearch = $(".history");
+var cities = $("#cities");
 var cityEl = $(".city-name");
-var sidebar = $(".sidebar");
 var previousSearches = [];
 var renderedButtons = $(".city-info")
 
@@ -20,15 +19,14 @@ searchEl.on("click", function (event) {
     }
 });
 
-historySearch.on("click", function (event) {
-    event.preventDefault()
-    console.log(this.innerHTML)
-    
-    previousCity = this.innerHTML
-    console.log("Hey")
-    getPastApiToday(previousCity)
-    getApiForecast(previousCity)
-    cityEl.val('')
+cities.on("click", function (event) {
+    if(event.target.matches('.history')) {
+        event.preventDefault()
+        var searchTerm = event.target.getAttribute('data-city');
+        getPastApiToday(searchTerm)
+        getApiForecast(searchTerm)
+        cityEl.val('')
+    }
 })
 
 function getApiToday(city) {
@@ -183,8 +181,8 @@ function renderPrevious() {
         var btn = document.createElement("button");
         btn.textContent = searches[i]
         btn.setAttribute("class", "history")
-        // btn.setAttribute("value", searches[i])
-        sidebar.append(btn)
+        btn.setAttribute("data-city", searches[i])
+        cities.append(btn)
     }
 }
 
@@ -195,8 +193,8 @@ function storePrevious(previousSearches, searches) {
         var btn = document.createElement("button");
         btn.textContent = previousSearches.at(-1)
         btn.setAttribute("class", "history")
-        // btn.setAttribute("value", previousSearches)
-        sidebar.append(btn)
+        btn.setAttribute("data-city", previousSearches.at(-1))
+        cities.append(btn)
     }
 }
 
