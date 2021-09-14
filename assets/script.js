@@ -20,7 +20,7 @@ searchEl.on("click", function (event) {
 });
 
 cities.on("click", function (event) {
-    if(event.target.matches('.history')) {
+    if (event.target.matches('.history')) {
         event.preventDefault()
         var searchTerm = event.target.getAttribute('data-city');
         getPastApiToday(searchTerm)
@@ -170,13 +170,13 @@ function displayForecast(forecast) {
             forecastTemp[i].innerHTML = (Math.round(limitedForecast[i].main.temp)) + "°F"
             forecastWind[i].innerHTML = "Wind: " + limitedForecast[i].wind.speed + " MPH"
             forecastHumidity[i].innerHTML = "Humidity: " + limitedForecast[i].main.humidity + "%"
-            forecastImg[i].src = "http://openweathermap.org/img/wn/" + limitedForecast[i].weather[0].icon + "@2x.png"
+            forecastImg[i].src = "https://openweathermap.org/img/wn/" + limitedForecast[i].weather[0].icon + "@2x.png"
         }
     }
 }
 
 function renderPrevious() {
-    
+
     for (var i = 0; i < searches.length; i++) {
         var btn = document.createElement("button");
         btn.textContent = searches[i]
@@ -188,8 +188,8 @@ function renderPrevious() {
 
 function storePrevious(previousSearches, searches) {
     localStorage.setItem("history", JSON.stringify(previousSearches))
-    
-    if(previousSearches !== null){
+
+    if (previousSearches !== null) {
         var btn = document.createElement("button");
         btn.textContent = previousSearches.at(-1)
         btn.setAttribute("class", "history")
@@ -202,7 +202,7 @@ function init() {
     $(".weather-info").hide()
     $(".forecast").hide()
     $(".forecast-header").hide()
-    
+
     searches = JSON.parse(localStorage.getItem("history"));
     if (searches === null) {
         return;
