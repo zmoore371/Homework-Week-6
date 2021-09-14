@@ -9,7 +9,7 @@ On the initial load of the page the application will check local storage for pri
 
 ## Notes
 
-Currently there is no way to remove the previous searches without using devtools to clear local storage. Also if you type a city in that has been searched before a duplicate button will be rendered in the list of previous searches. 
+If you would like to remove the previous searches type "clear" into the search bar and the page will reload with no previous searches. Also if you type a city in that has been searched before a duplicate button will be rendered in the list of previous searches. 
 
 Also this app was developed using a deprecated api call from open weather which explains some of the messy javascript in terms of rendering the forecast. While I would have liked to use the most current api call to display all information, I simply did not have enough time to rewrite the code. 
 

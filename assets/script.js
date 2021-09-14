@@ -9,7 +9,11 @@ searchEl.on("click", function (event) {
     event.preventDefault();
     var city = cityEl.val();
 
-    if (city) {
+    if (city == "clear") {
+        localStorage.clear();
+        location.reload();
+    }
+    else if (city) {
         getApiToday(city);
         getApiForecast(city);
         cityEl.val('');
