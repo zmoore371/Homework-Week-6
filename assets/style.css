@@ -12,6 +12,12 @@ header h1{
     padding-top: 10px;
 }
 
+.hint{
+    font-size: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
 .city-and-img{
     display: flex;
     flex-direction: row;
